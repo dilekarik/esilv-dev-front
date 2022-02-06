@@ -43,7 +43,7 @@ function MatchList() {
       {matchs?.length === 0 && <span>No data</span>}
       {matchs?.map((match) => (
         <li>
-          <Button title={match._id}></Button>
+          <Button title={"vs "+ match.user2.username}></Button>
         <button onClick={() => handleDeleteMatches(match._id)}>X</button>
        </li>
       ))}
