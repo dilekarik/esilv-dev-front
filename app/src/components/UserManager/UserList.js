@@ -8,7 +8,7 @@ function UserList() {
   const [filters, setFilters] = useState();
 
   function handleDeleteItem(user) {
-    fetch("http://localhost:3001/users/" + user.id, {
+    fetch("http://localhost:3000/users/" + user.id, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 404) {
@@ -21,7 +21,7 @@ function UserList() {
   }
 
   function handleAddUser(name) {
-    fetch("http://localhost:3001/users", {
+    fetch("http://localhost:3000/users", {
       method: "POST",
       body: JSON.stringify({ name: name }),
       headers: {
@@ -35,7 +35,7 @@ function UserList() {
   }
 
   function handleEditUser(value) {
-    fetch("http://localhost:3001/users/" + value.id, {
+    fetch("http://localhost:3000/users/" + value.id, {
       method: "PUT",
       body: JSON.stringify(value),
       headers: {
@@ -63,7 +63,7 @@ function UserList() {
   //}, [users])
 
   useEffect(() => {
-    fetch("http://localhost:3001/users")
+    fetch("http://localhost:3000/users")
       .then((response) => response.json())
       .then((data) => setUsers(data));
   }, []);
