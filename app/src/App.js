@@ -1,29 +1,31 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Button from "./components/lib/Button";
-import Table from "./components/lib/Table";
-import Collapse from "./components/lib/Collapse";
-import TodoList from "./components/TodoList/TodoList";
 import { useState } from "react";
-import UserList from "./components/UserManager/UserList";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
+import './App.css';
+import Dashboard from "./components/Dashboard/Dashboard";
+import Preferences from "./components/Preferences/Preferences";
 import Login from "./components/Security/Login";
+import Logout from "./components/Security/Logout";
 import MatchList from "./components/Matches/MatchList";
+import UserList from "./components/UserManager/UserList";
+import Button from "./components/lib/Button";
+import TodoList from "./components/TodoList/TodoList";
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  if(!token) {
+    return (
+    <Routes>
+      <Route path="/login" element={<Login setToken={setToken} />} />
+    </Routes>);  
+  }
   return (
-    <div className="App">
+    <div className="wrapper">
+      <h1>Application</h1>
       <header className="App-header">
-        <Link to="/">
-          <img src={logo} className="App-logo" alt="logo" />
-        </Link>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/matches">Matchs</Link>
-        </nav>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/preferences" element={<Preferences />} />
           <Route path="/matches" element={<MatchList />} />
           <Route path="/" element={<Home />} />
         </Routes>
@@ -33,19 +35,9 @@ function App() {
 }
 
 function Home() {
-  return (
+  return(
     <>
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
+      <Logout />
     </>
   );
 }
