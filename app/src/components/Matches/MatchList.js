@@ -3,6 +3,7 @@ import Button from "../lib/Button";
 
 function MatchList() {
   const [matchs, setMatchs] = useState();
+  const f = [];
   useEffect(() => {
     fetch("http://fauques.freeboxos.fr:3000/matches", {
       method: "GET",
@@ -21,7 +22,6 @@ function MatchList() {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    var f = []
     .then((data) => f = data)
     .then((response) => {
       if(response.status === 404) {
@@ -31,6 +31,7 @@ function MatchList() {
       }
     });
   }
+
   function handleDeleteMatches(id){
     setMatchs(matchs.filter((value) => value._id !== id));
   }
