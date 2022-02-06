@@ -9,7 +9,7 @@ function Login() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:3000/login", {
+    fetch("http://fauques.freeboxos.fr:3000/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

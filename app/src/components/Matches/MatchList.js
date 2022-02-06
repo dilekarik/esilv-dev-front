@@ -3,6 +3,7 @@ import Button from "../lib/Button";
 
 function MatchList() {
   const [matchs, setMatchs] = useState();
+  const f = [];
   useEffect(() => {
     fetch("http://fauques.freeboxos.fr:3000/matches", {
       method: "GET",
@@ -21,11 +22,18 @@ function MatchList() {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setMatchs([...matchs, data]);
-        console.log(data);
-      });
+    .then((data) => f = data)
+    .then((response) => {
+      if(response.status === 404) {
+
+      }else{
+        setMatchs([...matchs,f]);
+      }
+    });
+  }
+
+  function handleDeleteMatches(id){
+    setMatchs(matchs.filter((value) => value._id !== id));
   }
   return (
     <>
@@ -34,8 +42,10 @@ function MatchList() {
       {matchs === undefined && <span>Loading...</span>}
       {matchs?.length === 0 && <span>No data</span>}
       {matchs?.map((match) => (
-        <li>{<Button title={match._id}
-       />}</li>
+        <li>
+          <Button title={"vs "+ match.user2.username}></Button>
+        <button onClick={() => handleDeleteMatches(match._id)}>X</button>
+       </li>
       ))}
     </ul>
     </>
